@@ -1,19 +1,14 @@
 module Resque
   module Plugins
     module Honey
-      def self.write_key=(write_key)
-        @write_key = write_key
-      end
-
-      def self.dataset_name=(dataset_name)
-        @dataset_name = dataset_name
-      end
+      mattr_accessor :write_key
+      mattr_accessor :dataset_name
 
       def around_perform_honey(*args)
-        return yield unless @write_key && @dataset_name
+        return yield unless write_key && dataset_name
 
-        client = Libhoney::Client.new(writekey: @write_key,
-                                      dataset:  @dataset_name)
+        client = Libhoney::Client.new(writekey: write_key,
+                                      dataset:  dataset_name)
         exc = nil
         result = nil
         start_time = Time.now
@@ -30,6 +25,7 @@ module Resque
           success:     exc.nil?,
           worker_host: `hostname`.chomp
         }
+        p data
         client.send_now(data)
 
         client.close(true)

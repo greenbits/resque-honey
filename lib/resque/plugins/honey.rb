@@ -35,6 +35,10 @@ module Resque
         raise exc if exc
         result
       end
+
+      def hostname
+        @_hostname ||= `hostname`.chomp
+      end
     end
   end
 end

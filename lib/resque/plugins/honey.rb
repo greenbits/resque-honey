@@ -10,6 +10,8 @@ module Resque
       end
 
       def around_perform_honey(*args)
+        return yield unless @write_key && @dataset_name
+
         client = Libhoney::Client.new(writekey: @write_key,
                                       dataset:  @dataset_name)
         exc = nil

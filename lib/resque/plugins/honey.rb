@@ -25,7 +25,6 @@ module Resque
           success:     exc.nil?,
           worker_host: `hostname`.chomp
         }
-        p data
         client.send_now(data)
 
         client.close(true)

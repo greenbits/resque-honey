@@ -25,6 +25,12 @@ module Resque
           success:     exc.nil?,
           worker_host: `hostname`.chomp
         }
+        if exc
+          data.merge!(
+            error_class:   exc.class.to_s,
+            error_message: exc.message
+          )
+        end
         client.send_now(data)
 
         client.close(true)

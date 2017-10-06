@@ -23,7 +23,8 @@ module Resque
           duration_ms: (end_time - start_time) * 1000,
           job_type:    self.name.to_s,
           success:     exc.nil?,
-          worker_host: `hostname`.chomp
+          worker_host: `hostname`.chomp,
+          queue:       @queue.to_s
         }
         if exc
           data.merge!(

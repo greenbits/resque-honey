@@ -32,6 +32,9 @@ module Resque
             error_message: exc.message
           )
         end
+        if respond_to?(:hc_metadata)
+          data.merge!(hc_metadata)
+        end
         client.send_now(data)
 
         client.close(true)

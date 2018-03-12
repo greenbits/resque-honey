@@ -33,7 +33,7 @@ module Resque
           )
         end
         if respond_to?(:hc_metadata)
-          data.merge!(hc_metadata)
+          data.merge!(hc_metadata(*args))
         end
         client.send_now(data)
 

@@ -20,6 +20,8 @@ module Resque
         tags = [
           "job_class:#{self.name.to_s}",
           "queue:#{@queue.to_s}"
+          "start_time:#{start_time}",
+          "end_time:#{end_time}"
         ]
         tags << "service:#{service_name}" if service_name.present?
         tags = tags.concat(dd_tags(*args)).uniq if respond_to?(:dd_tags)

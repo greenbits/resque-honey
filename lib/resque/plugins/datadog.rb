@@ -7,7 +7,7 @@ module Resque
       def after_enqueue_datadog(*args)
         return unless statsd
         @enqueued_at = Time.now
-        statsd.event('Job Enqueued', enqueued_at.to_s, tags: job_tags(args))
+        statsd.event('Job Enqueued', @enqueued_at.to_s, tags: job_tags(args))
       end
 
       def around_perform_datadog(*args)
